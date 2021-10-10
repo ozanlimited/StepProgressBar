@@ -4,8 +4,8 @@
     <declare-styleable name="StepProgressBar">
         <attr name="step" format="integer" />
         <attr name="max" format="integer" />
-        <attr name="stepDoneColor" format="color|reference" />
-        <attr name="stepUndoneColor" format="color|reference" />
+        <attr name="stepDoneDrawable" format="integer" />
+        <attr name="stepUndoneDrawable" format="integer" />
         <attr name="stepMargin" format="dimension" />
     </declare-styleable>
 

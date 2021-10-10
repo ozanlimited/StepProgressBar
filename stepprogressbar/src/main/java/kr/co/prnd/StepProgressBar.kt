@@ -1,11 +1,12 @@
 package kr.co.prnd
 
 import android.content.Context
-import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.annotation.CallSuper
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import kr.co.prnd.stepprogressbar.R
 
@@ -29,17 +30,17 @@ class StepProgressBar @JvmOverloads constructor(
 
     var step: Int = DEFAULT_STEP
         set(value) {
+            if (value > max) return
             field = value
             makeStepView()
         }
 
-    var stepDoneColor = Color.BLUE
+    var stepDoneDrawable: Drawable? = null
         set(value) {
             field = value
             makeStepView()
         }
-
-    var stepUndoneColor = Color.LTGRAY
+    var stepUndoneDrawable: Drawable? = null
         set(value) {
             field = value
             makeStepView()
@@ -63,10 +64,12 @@ class StepProgressBar @JvmOverloads constructor(
 
             max = typedArray.getInt(R.styleable.StepProgressBar_max, max)
             step = typedArray.getInt(R.styleable.StepProgressBar_step, step)
-            stepDoneColor =
-                typedArray.getColor(R.styleable.StepProgressBar_stepDoneColor, stepDoneColor)
-            stepUndoneColor =
-                typedArray.getColor(R.styleable.StepProgressBar_stepUndoneColor, stepUndoneColor)
+            stepDoneDrawable =
+                typedArray.getDrawable(R.styleable.StepProgressBar_stepDoneDrawable)
+                    ?: ContextCompat.getDrawable(context, R.drawable.done_drawable)
+            stepUndoneDrawable =
+                typedArray.getDrawable(R.styleable.StepProgressBar_stepUndoneDrawable)
+                    ?: ContextCompat.getDrawable(context, R.drawable.undone_drawable)
             stepMargin =
                 typedArray.getDimensionPixelSize(R.styleable.StepProgressBar_stepMargin, stepMargin)
 
@@ -99,30 +102,34 @@ class StepProgressBar @JvmOverloads constructor(
         if (needInitial) {
             return
         }
-
         removeAllViewsInLayout()
-
-        val totalViewWidth = width - stepMargin * (max - 1)
-        val undoneViewWidth = totalViewWidth / max
         val undoneStepCount = max - step
-        val doneViewWidth = width - undoneStepCount * (undoneViewWidth + stepMargin)
-
-        addDoneView(doneViewWidth, height)
-        repeat(undoneStepCount) { addUndoneView(undoneViewWidth, height) }
+        val totalViewWidth = width - stepMargin * max * 2
+        val stepItemView = totalViewWidth / max
+        repeat(step) { addDoneView(stepItemView, height) }
+        repeat(undoneStepCount) { addUndoneView(stepItemView, height) }
     }
 
     private fun addDoneView(doneViewWidth: Int, height: Int) {
-        addView(View(context).apply {
+        addView(Button(context).apply {
             layoutParams = LayoutParams(doneViewWidth, height)
-            setBackgroundColor(stepDoneColor)
+                .apply {
+                    leftMargin = stepMargin
+                    rightMargin = stepMargin
+                }
+            background = stepDoneDrawable
         })
+
     }
 
     private fun addUndoneView(stepItemWidth: Int, height: Int) {
-        addView(View(context).apply {
+        addView(Button(context).apply {
             layoutParams = LayoutParams(stepItemWidth, height)
-                .apply { leftMargin = stepMargin }
-            setBackgroundColor(stepUndoneColor)
+                .apply {
+                    leftMargin = stepMargin
+                    rightMargin = stepMargin
+                }
+            background = stepUndoneDrawable
         })
     }
 

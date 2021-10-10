@@ -10,7 +10,8 @@
         android:id="@+id/stepProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        app:stepMargin="8dp" />
 
 
     <kr.co.prnd.StepProgressBar
@@ -26,9 +27,12 @@
         android:layout_marginTop="24dp"
         app:max="10"
         app:step="6"
-        app:stepDoneColor="#ff0000"
-        app:stepMargin="8dp"
-        app:stepUndoneColor="#dedede" />
+        app:stepMargin="8dp" />
 
+    <Button
+        android:id="@+id/step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Step Increase" />
 
 </LinearLayout>
