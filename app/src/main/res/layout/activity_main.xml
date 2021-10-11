@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <kr.co.prnd.StepProgressBar
+    <com.ozan.progress.StepProgressBar
         android:id="@+id/stepProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,14 +14,14 @@
         app:stepMargin="8dp" />
 
 
-    <kr.co.prnd.StepProgressBar
+    <com.ozan.progress.StepProgressBar
         android:layout_width="300dp"
         android:layout_height="8dp"
         android:layout_marginTop="24dp"
         app:max="10"
         app:step="5" />
 
-    <kr.co.prnd.StepProgressBar
+    <com.ozan.progress.StepProgressBar
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:layout_marginTop="24dp"

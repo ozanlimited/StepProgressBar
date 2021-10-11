@@ -1,10 +1,9 @@
 package com.example.stepprogressbardemo
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
-import kr.co.prnd.StepProgressBar
+import com.ozan.progress.StepProgressBar
 
 class MainActivity : Activity() {
 

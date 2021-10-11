@@ -1,4 +1,4 @@
-package kr.co.prnd
+package com.ozan.progress
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import androidx.annotation.CallSuper
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
-import kr.co.prnd.stepprogressbar.R
+import com.ozan.progress.stepprogressbar.R
 
 
 class StepProgressBar @JvmOverloads constructor(
