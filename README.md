@@ -33,15 +33,15 @@ If you think this library is useful, please press star button at upside.
 
 ## How to use
 ```xml
- <kr.co.prnd.StepProgressBar
+ <com.ozan.progress.StepProgressBar
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:layout_marginTop="24dp"
         app:max="10"
         app:step="6"
-        app:stepDoneColor="#ff0000"
+        app:stepDoneDrawable="@drawable/done"
         app:stepMargin="8dp"
-        app:stepUndoneColor="#dedede" />
+        app:stepUndoneDrawable="#@drawable/undone" />
 ```
 <br/>
 
@@ -50,8 +50,8 @@ If you think this library is useful, please press star button at upside.
 You can change your `StepProgressBar` attribute programmatically
 - `setMax()`
 - `setStep()`
-- `setStepDoneColor()`
-- `setStepUndoneColor()`
+- `setStepDoneDrawable()`
+- `setStepUndoneDrawable()`
 - `setStepMargin()`
 
 
