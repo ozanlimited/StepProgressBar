@@ -32,6 +32,14 @@ class StepProgressBar @JvmOverloads constructor(
         set(value) {
             if (value > max) return
             field = value
+            clearError()
+            makeStepView()
+        }
+
+    var error: Int = DEFAULT_ERROR_STEP
+        set(value) {
+            if (value > max) return
+            field = value
             makeStepView()
         }
 
@@ -41,6 +49,11 @@ class StepProgressBar @JvmOverloads constructor(
             makeStepView()
         }
     var stepUndoneDrawable: Drawable? = null
+        set(value) {
+            field = value
+            makeStepView()
+        }
+    var stepErrorDrawable: Drawable? = null
         set(value) {
             field = value
             makeStepView()
@@ -70,6 +83,9 @@ class StepProgressBar @JvmOverloads constructor(
             stepUndoneDrawable =
                 typedArray.getDrawable(R.styleable.StepProgressBar_stepUndoneDrawable)
                     ?: ContextCompat.getDrawable(context, R.drawable.undone_drawable)
+            stepErrorDrawable =
+                typedArray.getDrawable(R.styleable.StepProgressBar_stepErrorDrawable)
+                    ?: ContextCompat.getDrawable(context, R.drawable.error_drawable)
             stepMargin =
                 typedArray.getDimensionPixelSize(R.styleable.StepProgressBar_stepMargin, stepMargin)
 
@@ -106,8 +122,29 @@ class StepProgressBar @JvmOverloads constructor(
         val undoneStepCount = max - step
         val totalViewWidth = width - stepMargin * max * 2
         val stepItemView = totalViewWidth / max
-        repeat(step) { addDoneView(stepItemView, height) }
+        for (index in 1..step) {
+            if (index == error) {
+                addErrorView(stepItemView, height)
+            } else {
+                addDoneView(stepItemView, height)
+            }
+        }
         repeat(undoneStepCount) { addUndoneView(stepItemView, height) }
+    }
+
+    fun clearError(){
+        error = DEFAULT_ERROR_STEP
+    }
+
+    private fun addErrorView(doneViewWidth: Int, height: Int) {
+        addView(Button(context).apply {
+            layoutParams = LayoutParams(doneViewWidth, height)
+                .apply {
+                    leftMargin = stepMargin
+                    rightMargin = stepMargin
+                }
+            background = stepErrorDrawable
+        })
     }
 
     private fun addDoneView(doneViewWidth: Int, height: Int) {
@@ -119,7 +156,6 @@ class StepProgressBar @JvmOverloads constructor(
                 }
             background = stepDoneDrawable
         })
-
     }
 
     private fun addUndoneView(stepItemWidth: Int, height: Int) {
@@ -136,6 +172,7 @@ class StepProgressBar @JvmOverloads constructor(
     companion object {
         private const val DEFAULT_MAX = 10
         private const val DEFAULT_STEP = 0
+        private const val DEFAULT_ERROR_STEP = -1
     }
 
 }

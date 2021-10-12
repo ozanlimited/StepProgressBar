@@ -6,6 +6,7 @@
         <attr name="max" format="integer" />
         <attr name="stepDoneDrawable" format="integer" />
         <attr name="stepUndoneDrawable" format="integer" />
+        <attr name="stepErrorDrawable" format="integer" />
         <attr name="stepMargin" format="dimension" />
     </declare-styleable>
 

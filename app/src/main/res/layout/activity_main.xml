@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:stepMargin="8dp" />
+        app:stepMargin="8dp"
+        app:stepDoneDrawable="@drawable/app_done_drawable"
+        />
 
 
     <com.ozan.progress.StepProgressBar
@@ -34,5 +36,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Step Increase" />
+    <Button
+        android:id="@+id/error_drawbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="error draw" />
+    <Button
+        android:id="@+id/error_clearbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="error clear" />
 
 </LinearLayout>

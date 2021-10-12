@@ -20,6 +20,16 @@ class MainActivity : Activity() {
                 step += 1
             }
         }
+        findViewById<Button>(R.id.error_drawbtn). setOnClickListener {
+            findViewById<StepProgressBar>(R.id.stepProgressBar).apply {
+                error = 3
+            }
+        }
+        findViewById<Button>(R.id.error_clearbtn). setOnClickListener {
+            findViewById<StepProgressBar>(R.id.stepProgressBar).apply {
+               clearError()
+            }
+        }
 
     }
 }
