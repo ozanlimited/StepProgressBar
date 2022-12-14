@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 31
@@ -20,8 +21,59 @@ android {
 
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.6.0"
+ext {
+    mGroupId = "com.ozanlimited"
+    mArtifactId = "stepprogressbar"
+    mVersionCode = 1
+    mVersionName = "1.0.0"
+
+    mLibraryName = "StepProgressBar"
+    mLibraryDescription = ""
+}
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId mGroupId
+                artifactId mArtifactId
+                version mVersionName
+
+                from components.release
+
+                artifact androidSourcesJar
+
+                pom {
+                    name = mLibraryName
+                    description = mLibraryDescription
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                url System.getenv("GITLAB_REPO_URL")
+                credentials(HttpHeaderCredentials) {
+                    name = System.getenv("GITLAB_DEPLOY_KEY")
+                    value = System.getenv("GITLAB_DEPLOY_TOKEN")
+                }
+                authentication {
+                    header(HttpHeaderAuthentication)
+                }
+            }
+        }
+    }
+
+    publish.dependsOn assemble
+
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+        implementation "androidx.core:core-ktx:1.6.0"
+    }
 }
